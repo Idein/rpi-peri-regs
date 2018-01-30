@@ -23,5 +23,5 @@ $ sudo python setup.py install
 
 ```
 $ pip install nose
-$ nosetests -v -s
+$ sudo nosetests -v -s
 ```
