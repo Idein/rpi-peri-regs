@@ -2,6 +2,8 @@
 
 A Python driver for accessing peripheral memory (e.g. V3D) on Raspberry Pi.
 
+The register definitions are derived from
+[`Brcm_Android_ICS_Graphics_Stack`](https://docs.broadcom.com/docs/12358546)`/brcm_usrlib/dag/vmcsx/vcinclude/bcm2708_chip/v3d.h`.
 
 ## Requirements
 
