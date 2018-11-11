@@ -7,6 +7,9 @@ The register definitions are derived from
 
 ## Requirements
 
+`Cython` is needed (see [requirements.txt](requirements.txt)).
+For testing, `nose` is needed.
+
 Because it accesses the peripheral through `/dev/mem`, you need to be root to
 run this driver.
 
@@ -16,8 +19,9 @@ run this driver.
 ```
 $ git clone https://github.com/Idein/rpi-peri-regs.git
 $ cd rpi-peri-regs/
+$ pip install -r requirements.txt
 $ python setup.py build
-$ sudo python setup.py install
+$ python setup.py install
 ```
 
 
@@ -25,5 +29,6 @@ $ sudo python setup.py install
 
 ```
 $ pip install nose
+$ python setup.py build_ext --inplace
 $ sudo nosetests -v -s
 ```
