@@ -1,3 +1,11 @@
+import platform
+from distutils.version import LooseVersion
+
+# Because mmap.mmap does not support buffer interface...
+# https://bugs.python.org/issue9229
+if LooseVersion(platform.python_version()) < LooseVersion("3.4"):
+    raise RuntimeError("Python older than 3.4 is not supported")
+
 from distutils.core import setup
 from distutils.extension import Extension
 from Cython.Distutils import build_ext
