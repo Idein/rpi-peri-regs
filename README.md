@@ -20,12 +20,13 @@ run this driver.
 $ git clone https://github.com/Idein/rpi-peri-regs.git
 $ cd rpi-peri-regs/
 $ pip install -r requirements.txt
-$ python setup.py build
-$ python setup.py install
+$ pip install .
 ```
 
+Run `pip uninstall -r requirements.txt rpi_peri_regs` to uninstall them.
 
-## Testing
+
+## Running tests
 
 ```
 $ pip install nose
