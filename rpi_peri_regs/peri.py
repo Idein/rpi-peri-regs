@@ -1,11 +1,12 @@
 import os
 import mmap
 import ctypes
-import struct
+import rpi_peri_regs.buffer as buffer
+import rpi_peri_regs.periaccess as periaccess
 
-class peri(mmap.mmap):
+class peri(object):
 
-    def __new__(self):
+    def __init__(self):
         bcm = ctypes.cdll.LoadLibrary("libbcm_host.so")
         addr = bcm.bcm_host_get_peripheral_address()
         size = bcm.bcm_host_get_peripheral_size()
@@ -13,19 +14,30 @@ class peri(mmap.mmap):
 
         fd = os.open('/dev/mem', os.O_RDWR | os.O_SYNC)
 
-        peri = super().__new__(self, fileno = fd, length = size,
+        self.map = mmap.mmap(fileno = fd, length = size,
                 flags = mmap.MAP_SHARED,
                 prot = mmap.PROT_READ | mmap.PROT_WRITE, offset = addr)
 
         os.close(fd)
         del(fd)
 
-        return peri
+        with buffer.buffer(self.map) as buf:
+            self.periaddr = buf.get_addr()
+
+    def close(self):
+        del(self.periaddr)
+        self.map.close()
+        del(self.map)
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, value, traceback):
+        self.close()
+        return exc_type is None
 
     def __getitem__(self, key):
-        self.seek(key)
-        return struct.unpack('I', self.read(4))[0]
+        return periaccess.read4(self.periaddr + key)
 
     def __setitem__(self, key, value):
-        self.seek(key)
-        self.write(struct.pack('I', value))
+        periaccess.write4(self.periaddr + key, value)
