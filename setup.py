@@ -25,7 +25,7 @@ ext_modules = [
 setup(
         name = "rpi-peri-regs",
         packages = ["rpi_peri_regs"],
-        version = "0.0.0",
+        version = "0.1.0",
         description = "Peripheral memory mapper for Raspberry Pi",
         cmdclass = {'build_ext': build_ext},
         ext_modules = cythonize(ext_modules),
