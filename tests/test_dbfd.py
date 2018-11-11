@@ -36,4 +36,4 @@ def test_info():
             print('V3D is enabled')
             show_info(peri)
         else:
-            print('V3D is NOT enabled: 0x%08x' % v)
+            raise RuntimeError('V3D is NOT enabled: 0x%08x' % v)
